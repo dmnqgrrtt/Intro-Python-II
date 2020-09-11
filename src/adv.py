@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player_1 = Player("Player 1", room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +51,59 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+selection = "x"
+while selection != "q":
+
+    print("\n")
+    print(f"{player_1.name}")
+    print(f"Current Room: {player_1.current_room.name}")
+    print(f"Room Description: {player_1.current_room.description}")
+    print("\n")
+
+    selection = input("Please enter the direction you would like the player to move: ").lower()
+    print("\n")
+
+    if selection == "n" or selection == "s" or selection == "e" or selection == "w":
+        if(player_1.current_room == room['outside']):
+            if(selection == "n"):
+                player_1.current_room = room['outside'].n_to
+            
+            else:
+                print("The only direction you can move from the  Outside Cave Entrance is North")
+        elif(player_1.current_room == room['foyer']):
+            if(selection == "n"):
+                player_1.current_room = room['foyer'].n_to
+            elif(selection == "s"):
+                player_1.current_room = room['foyer'].s_to
+            elif(selection == "e"):
+                player_1.current_room = room['foyer'].e_to
+            else:
+                print("You cannot move west from the Foyer")
+                print("\n")
+        elif(player_1.current_room == room['overlook']):
+            if(selection == "s"):
+                player_1.current_room = room['overlook'].s_to
+            else:
+                print("You can only move south from the Grand Overlook")
+                print("\n")
+        elif(player_1.current_room == room['narrow']):
+            if(selection == "w"):
+                player_1.current_room = room['narrow'].w_to
+            elif(selection == "n"):
+                player_1.current_room = room['narrow'].n_to
+            else:
+                print("You can only move North or West from the Narrow Passage")
+                print("\n")
+        elif(player_1.current_room == room['treasure']):
+            if(selection == "s"):
+                player_1.current_room = room['treasure'].s_to
+            else:
+                print("You can only move south from the Treasure Chamber")
+                print("\n")
+
+    elif selection == "q":
+                print("Thanks for playing!")
+                print("\n")
+    else:
+        print("Sorry, valid directions are n for north, s for south, e for east, and w for west")
